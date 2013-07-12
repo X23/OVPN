@@ -8,3 +8,11 @@ Allows for the easy creation of streamlined ovpn files - ones where all certific
 <code>
  -s  sets the location of the easy-rsa keys and certificates e.g. /etc/openvpn/easy-rsa/keys
 </code>
+
+Instructions;
+<Ol>
+<li>Download using <code> </code></li>
+<li>Run <code>chmod +x ovpn-streamlined</code></li>
+<li>Execute script for the first time using the<code> -s </code>to set the easy-rsa key path e.g. 
+<code>./ovpn-streamlined -s /etc/openvpn/easy-rsa/keys </code> you only need to set this once</li>
+<li>Now you can run the script to generate the file e.g. <code> ./ovpn-streamlined 10.1.1.1 1194 b </code> where 10.1.1.1 is the IP address of the server, 1194 is the port the server is on and a is the client name that the certificates are called. </li>
