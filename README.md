@@ -7,4 +7,4 @@ Allows for the easy creation of streamlined ovpn files - ones where all certific
 </code>
 <code>
  -s  sets the location of the easy-rsa keys and certificates e.g. /etc/openvpn/easy-rsa/keys
-</code
+</code>
