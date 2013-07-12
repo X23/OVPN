@@ -13,8 +13,10 @@ The script automatically generates the file with UDP enabled as well as compress
 
 Instructions;
 <Ol>
-<li>Download using <code> </code></li>
+<li>Download using <code> wget https://raw.github.com/X23/OVPN/master/ovpn-streamlined </code></li>
 <li>Run <code>chmod +x ovpn-streamlined</code></li>
 <li>Execute script for the first time using the<code> -s </code>to set the easy-rsa key path e.g. 
 <code>./ovpn-streamlined -s /etc/openvpn/easy-rsa/keys </code> you only need to set this once</li>
 <li>Now you can run the script to generate the file e.g. <code> ./ovpn-streamlined 10.1.1.1 1194 b </code> where 10.1.1.1 is the IP address of the server, 1194 is the port the server is on and a is the client name that the certificates are called. </li>
+
+<bold>It is necessary to run the script as root via login or sudo due to the permissions on the keys directory </bold>
