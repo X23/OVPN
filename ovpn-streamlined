@@ -1,0 +1,60 @@
+#!/bin/bash
+usage="Usage: to generate OVPN files for devices where seperate certificates aren't accepted"
+usage2="enter 'ip or hostname' 'port' 'client-name' in that order
+  where:
+    -h  show this help text
+    -s  sets the location of the easy-rsa keys and certificates e.g. /etc/openvpn/easy-rsa/keys"
+error='\E[31;40m \033[1m ERROR \E[37;40m \033[0m not all parameters set use -h for help'
+q=.ovpn
+key=`cat $q`
+
+if [ "$1" == "-h" ]; then
+  echo $usage
+  echo "$usage2"
+  exit 0
+fi
+if [ "$1" == "-s" ]; then
+  echo "$2" > $q
+  exit 0
+fi
+
+if [[ -z "$1" ]]; then
+ echo -e $error
+ exit 0
+fi
+if [[ -z "$2" ]]; then
+ echo -e $error
+ exit 0
+fi
+if [[ -z "$3" ]]; then
+ echo -e $error
+ exit 0
+fi
+
+exec > >(tee $3.ovpn)
+exec 2>&1
+echo "dev tun"
+echo "client"
+echo "proto udp"
+echo "remote $1 $2"
+echo "resolv-retry infinite"
+echo "nobind"
+echo "persist-key"
+echo "persist-tun"
+cd $key
+echo "<ca>"
+cat ca.crt
+echo "</ca>"
+echo "<cert>"
+cat $3.crt
+echo "</cert>"
+echo "<key>"
+cat $3.key
+echo "</key>"
+echo "key-direction 1"
+echo "<tls-auth>"
+cat ta.key
+echo "</tls-auth>"
+echo comp-lzo
+echo verb 3
+echo cipher AES-256-CBC
