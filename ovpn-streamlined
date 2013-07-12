@@ -10,6 +10,7 @@
 #
 #
 ####################################################################
+
 usage="Usage: to generate OVPN files for devices where seperate certificates aren't accepted"
 usage2="enter 'ip or hostname' 'port' 'client-name' in that order
   where:
