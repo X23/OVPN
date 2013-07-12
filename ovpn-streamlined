@@ -1,4 +1,15 @@
 #!/bin/bash
+
+####################################################################
+#Licence
+#
+#All code is copyright © C Ponting, All rights reserved.
+#
+#
+#However, you may use the script free for personal usage.
+#
+#
+####################################################################
 usage="Usage: to generate OVPN files for devices where seperate certificates aren't accepted"
 usage2="enter 'ip or hostname' 'port' 'client-name' in that order
   where:
