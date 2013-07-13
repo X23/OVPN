@@ -1,16 +1,4 @@
 #!/bin/bash
-
-####################################################################
-#Licence
-#
-#All code is copyright © C Ponting, All rights reserved.
-#
-#
-#However, you may use the script free for personal usage.
-#
-#
-####################################################################
-
 usage="Usage: to generate OVPN files for devices where seperate certificates aren't accepted"
 usage2="enter 'ip or hostname' 'port' 'client-name' in that order
   where:
@@ -18,21 +6,18 @@ usage2="enter 'ip or hostname' 'port' 'client-name' in that order
     -s  sets the location of the easy-rsa keys and certificates e.g. /etc/openvpn/easy-rsa/keys"
 error='\E[31;40m \033[1m ERROR \E[37;40m \033[0m not all parameters set use -h for help'
 q=.ovpn
-key=`cat $q`
 
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
 if [ "$1" == "-h" ]; then
   echo $usage
   echo "$usage2"
   exit 0
 fi
-
 if [ "$1" == "-s" ]; then
   echo "$2" > $q
-  exit 0
-fi
-
-if [ "$1" == "-v" ]; then
-  echo "Version 1.1"
   exit 0
 fi
 
@@ -40,17 +25,19 @@ if [[ -z "$1" ]]; then
  echo -e $error
  exit 0
 fi
-
 if [[ -z "$2" ]]; then
  echo -e $error
  exit 0
 fi
-
 if [[ -z "$3" ]]; then
  echo -e $error
  exit 0
 fi
-
+if [ ! -f .ovpn ]; then
+    echo 'Directory settings not found run using -s and the easy-rsa key directory to set'
+    exit 0
+fi
+key=`cat $q`
 exec > >(tee $3.ovpn)
 exec 2>&1
 echo "dev tun"
